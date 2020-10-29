@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.0",
     "json-server": "^0.16.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-paginate": "^6.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
