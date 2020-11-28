@@ -1,0 +1,46 @@
+body {
+  font-family: 'Nerko One', cursive;
+  background-color:steelblue;
+  margin: 50px auto;
+  width: 900px;
+  box-sizing: border-box;
+}
+
+/* h1 {
+  color: white;
+} */
+
+table {
+  background-color: white;
+}
+
+tr, td {
+  /* border: 1px solid #000000; */
+  background-color: white;
+}
+
+th {
+  background-color: lightblue;
+}
+
+.names {
+  background-color: lightblue;
+}
+
+.totals {
+  background-color: rgb(255, 198, 92);
+  text-align: center;
+}
+
+table table {
+  table-layout: fixed;
+  /* width: 100%; */
+}
+
+table table td {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+
