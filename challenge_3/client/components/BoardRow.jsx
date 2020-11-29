@@ -9,9 +9,9 @@ class BoardRow extends React.Component {
   render() {
     return (
       <tr>
-        <td className="names">Namez</td>
-        {this.props.frames.map((shot, index) => {
-          return <Frame key={index} player={this.props.player} frameNum={index} scoreboard={this.props.scoreboard} />
+        <td className="names">{this.props.playerNames[this.props.player]}</td>
+        {this.props.frames.map((frame, index) => {
+          return <Frame key={index} player={this.props.player} frameNum={index} frame={frame} />
         })}
         <td className="totals">100</td>
       </tr>

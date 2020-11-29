@@ -1,46 +1,63 @@
 body {
   font-family: 'Nerko One', cursive;
-  background-color:steelblue;
   margin: 50px auto;
   width: 900px;
   box-sizing: border-box;
+  background-color: rgb(151, 196, 211);
+  text-align: center;
+  color: rgb(0, 41, 74);
 }
 
-/* h1 {
-  color: white;
-} */
-
-table {
+input {
+  border-radius: 2px;
+  border: 1px solid steelblue;
   background-color: white;
+}
+
+input[type='submit'] {
+  border: 1px solid steelblue;
+  color: rgb(0, 41, 74);
+  margin-left: 5px;
+  font-family: 'Nerko One', cursive;
 }
 
 tr, td {
-  /* border: 1px solid #000000; */
   background-color: white;
 }
 
-th {
-  background-color: lightblue;
-}
-
-.names {
-  background-color: lightblue;
+.names, th, .totals {
+  border: 2px solid steelblue;
 }
 
 .totals {
-  background-color: rgb(255, 198, 92);
   text-align: center;
 }
 
 table table {
   table-layout: fixed;
-  /* width: 100%; */
 }
+
+table {
+  border: 2px solid steelblue;
+  background-color: white;
+}
+
+table table {
+  background-color: lightblue;
+  border: 2px solid steelblue;
+} 
 
 table table td {
   width: 30px;
   height: 30px;
   text-align: center;
+  border: 1px solid steelblue;
 }
 
+.score-input {
+  margin: 30px 0 10px;
+}
 
+.warning {
+  color: red;
+}

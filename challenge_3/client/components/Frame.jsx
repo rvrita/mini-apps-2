@@ -6,20 +6,17 @@ class Frame extends React.Component {
   }
 
   render() {
-    const score1 = this.props.scoreboard[this.props.player][this.props.frameNum][0];
-    const score2 = this.props.scoreboard[this.props.player][this.props.frameNum][1];
-    const score3 = this.props.scoreboard[this.props.player][this.props.frameNum][2];
+    const [shot1, shot2, runningTotal] = this.props.frame;
     return (
       <td>
         <table>
           <tbody>
           <tr>
-            <td>{score1}</td>
-            <td>{score2}</td>
+            <td>{shot1}</td>
+            <td>{shot2}</td>
           </tr>
           <tr>
-            <td>{' '}</td>
-            <td>{score3}</td>
+            <td colSpan="2">{runningTotal}</td>
           </tr>
           </tbody>
         </table>
