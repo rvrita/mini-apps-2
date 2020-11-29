@@ -6,12 +6,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPin: '',
-      numOfPlayers: 3,
+      playerNames: ['Riri', 'Mmtg', 'Chili', 'Crash'],
       currentFrame: 0,
       currentPlayer: 0,
       invalidPinNum: false,
       currentShot: 0,
       scoreboard: [
+        // [ shot1, shot2, runningTotal ]
+        [[null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0]],
         [[null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0]],
         [[null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0]],
         [[null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0], [null, null, 0]]
@@ -21,67 +23,64 @@ class App extends React.Component {
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
   }
 
-  setBoard() {
-    const newScoreboard = this.state.scoreboard.slice();
-    const value = this.state.currentPin;
-    newScoreboard[this.state.currentPlayer][this.state.currentFrame][this.state.currentShot] = value;
-    newScoreboard[this.state.currentPlayer][this.state.currentFrame][2] += parseInt(value);
-    if ((this.state.currentShot === 1) && (this.state.currentFrame !== 9)) {
-      newScoreboard[this.state.currentPlayer][this.state.currentFrame + 1][2] = newScoreboard[this.state.currentPlayer][this.state.currentFrame][2];
+  isValid(value) {
+    return 0 <= value && value <= 10;
+  }
+
+  updateBoardWithNewScore(scoreboard, value, player, frame, shot) {
+    const newScoreboard = scoreboard.slice();
+    newScoreboard[player][frame][shot] = value;
+    newScoreboard[player][frame][2] += parseInt(value);
+
+
+
+
+    if ((shot === 1) && (frame !== 9)) {
+      newScoreboard[player][frame + 1][2] = newScoreboard[player][frame][2];
     }
     this.setState({
       scoreboard: newScoreboard
-    }, () => console.log(this.state));
+    });
   }
 
-  setNextPlayer() {
-    const currPlayer = this.state.currentPlayer;
-    if (currPlayer === this.state.numOfPlayers - 1) {
-      this.setState({
-        currentPlayer: 0
-      });
-      this.setNextFrame();
-    } else {
-      this.setState({
-        currentPlayer: currPlayer + 1
-      });
-    }
-  }
-
-  setNextFrame() {
-    const currFrame = this.state.currentFrame;
-    if (currFrame !== 9) {
-      this.setState({
-        currentFrame: currFrame + 1
-      });
-    }
-  }
-
-  setNextShot() {
+  // returns true if player is done the frame
+  nextShot() {
     if (this.state.currentShot === 0) {
       this.setState({
         currentShot: 1
       });
+      return false;
     } else {
       this.setState({
         currentShot: 0
       });
-      this.setNextPlayer();
+      return true;
     }
   }
 
-  isValid() {
-    const value = this.state.currentPin;
-    if (0 <= value && value <= 10) {
+  // returns true if all players are done with this frame
+  nextPlayer() {
+    const currPlayer = this.state.currentPlayer;
+    if (currPlayer === this.state.playerNames.length - 1) {
       this.setState({
-        invalidPinNum: false
+        currentPlayer: 0
       });
-      this.setBoard();
-      this.setNextShot();
+      return true;
     } else {
       this.setState({
-        invalidPinNum: true
+        currentPlayer: currPlayer + 1
       });
+      return false;
+    }
+  }
+
+  // advances to next frame
+  nextFrame() {
+    const currFrame = this.state.currentFrame;
+    if (currFrame !== 9) {
+      this.setState({
+        currentFrame: currFrame + 1
+      }, () => console.log(this.state));
     }
   }
 
@@ -90,22 +89,44 @@ class App extends React.Component {
     const value = e.target.value;
     this.setState({
       [name]: value
-    }, () => console.log(this.state));
+    });
   }
 
   handleInputSubmit(e) {
     e.preventDefault();
-    console.log('set');
-    this.isValid();
+    // if input between 0 and 10
+    if (this.isValid(this.state.currentPin)) {
+      this.setState({
+        invalidPinNum: false
+      });
+      // add new score to the board
+      this.updateBoardWithNewScore(
+        this.state.scoreboard,
+        this.state.currentPin,
+        this.state.currentPlayer,
+        this.state.currentFrame,
+        this.state.currentShot
+      );
+      if (this.nextShot()) {
+        if (this.nextPlayer()) {
+          this.nextFrame();
+        }
+      }
+    } else {
+      this.setState({
+        invalidPinNum: true
+      });
+    }
   }
 
   render() {
     return (
       <div>
         <h1>Bowling Score Board</h1>
-        <form onSubmit={this.handleInputSubmit}>
+        <form className="score-input" onSubmit={this.handleInputSubmit}>
           <label htmlFor="current-pin">
             Number of pins you hit:
+            {' '}
             <input
               type="text"
               id="current-pin"
@@ -118,9 +139,9 @@ class App extends React.Component {
           <input type="submit" value="submit" />
         </form>
         {this.state.invalidPinNum &&
-          <p>Please type a valid pin number (between 0 and 10)</p>
+          <p className="warning">Please type a valid pin number (between 0 and 10)</p>
         }
-        <Board scoreboard={this.state.scoreboard} />
+        <Board playerNames={this.state.playerNames} scoreboard={this.state.scoreboard} />
       </div>
     )
   }
