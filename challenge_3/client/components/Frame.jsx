@@ -14,9 +14,10 @@ class Frame extends React.Component {
           <tr>
             <td>{shot1}</td>
             <td>{shot2}</td>
+            {this.props.frameNum === 9 && <td></td>}
           </tr>
           <tr>
-            <td colSpan="2">{runningTotal}</td>
+            <td colSpan={this.props.frameNum === 9 ? 3 : 2}>{runningTotal}</td>
           </tr>
           </tbody>
         </table>
