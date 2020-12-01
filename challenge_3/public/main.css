@@ -60,4 +60,17 @@ table table td {
 
 .warning {
   color: red;
+  display: inline;
+}
+
+/* .current-player td {
+  background-color: lightgreen;
+}
+
+tr td.current-frame {
+  background-color: lightyellow;
+} */
+
+tr td.current-shot {
+  background-color: lightpink;
 }

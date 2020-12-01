@@ -6,19 +6,22 @@ class Frame extends React.Component {
   }
 
   render() {
-    const [shot1, shot2, runningTotal] = this.props.frame;
+    const [shot1, shot2, shot3, runningTotal] = this.props.frame;
+    const { currentShot, isCurrentFrame, frameNum } = this.props;
     return (
       <td>
         <table>
           <tbody>
-          <tr>
-            <td>{shot1}</td>
-            <td>{shot2}</td>
-            {this.props.frameNum === 9 && <td></td>}
-          </tr>
-          <tr>
-            <td colSpan={this.props.frameNum === 9 ? 3 : 2}>{runningTotal}</td>
-          </tr>
+            <tr>
+              <td className={isCurrentFrame && currentShot == 0 && 'current-shot'}>{shot1}</td>
+              <td className={isCurrentFrame && currentShot == 1 && 'current-shot'}>{shot2}</td>
+              {frameNum === 9 &&
+                <td className={isCurrentFrame && currentShot == 2 && 'current-shot'}>{shot3}</td>
+              }
+            </tr>
+            <tr>
+              <td className={isCurrentFrame && 'current-frame'} colSpan={frameNum === 9 ? 3 : 2}>{runningTotal}</td>
+            </tr>
           </tbody>
         </table>
       </td>

@@ -7,13 +7,17 @@ class BoardRow extends React.Component {
   }
 
   render() {
+    const {currentFrame, currentShot, isCurrentPlayer, frames, playerNames, player} = this.props;
     return (
-      <tr>
-        <td className="names">{this.props.playerNames[this.props.player]}</td>
-        {this.props.frames.map((frame, index) => {
-          return <Frame key={index} player={this.props.player} frameNum={index} frame={frame} />
+      <tr className={isCurrentPlayer && 'current-player'}>
+        <td className="names">{playerNames[player]}</td>
+        {frames.map((frame, index) => {
+          return <Frame 
+          isCurrentFrame={isCurrentPlayer && currentFrame == index}
+          currentShot={currentShot}
+          key={index} player={player} frameNum={index} frame={frame} />
         })}
-        <td className="totals">100</td>
+        <td className="totals">{frames[9][3]}</td>
       </tr>
     )
   }

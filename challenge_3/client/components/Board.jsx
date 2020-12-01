@@ -21,7 +21,12 @@ class Board extends React.Component {
           </thead>
           <tbody>
             {this.props.scoreboard.map((row, index) => {
-              return <BoardRow playerNames={this.props.playerNames} key={index} player={index} frames={row}/>
+              return <BoardRow
+                isCurrentPlayer={this.props.currentPlayer == index}
+                currentFrame={this.props.currentFrame}
+                currentShot={this.props.currentShot}
+                playerNames={this.props.playerNames}
+                key={index} player={index} frames={row} />
             })}
           </tbody>
         </table>
