@@ -13,14 +13,14 @@ class Frame extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td className={isCurrentFrame && currentShot == 0 && 'current-shot'}>{shot1}</td>
-              <td className={isCurrentFrame && currentShot == 1 && 'current-shot'}>{shot2}</td>
+              <td className={isCurrentFrame && currentShot == 0 ? 'current-shot' : ''}>{shot1}</td>
+              <td className={isCurrentFrame && currentShot == 1 ? 'current-shot' : ''}>{shot2}</td>
               {frameNum === 9 &&
-                <td className={isCurrentFrame && currentShot == 2 && 'current-shot'}>{shot3}</td>
+                <td className={isCurrentFrame && currentShot == 2 ? 'current-shot' : ''}>{shot3}</td>
               }
             </tr>
             <tr>
-              <td className={isCurrentFrame && 'current-frame'} colSpan={frameNum === 9 ? 3 : 2}>{runningTotal}</td>
+              <td className={isCurrentFrame ? 'current-frame' : ''} colSpan={frameNum === 9 ? 3 : 2}>{runningTotal}</td>
             </tr>
           </tbody>
         </table>

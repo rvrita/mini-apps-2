@@ -1,24 +1,32 @@
 body {
   font-family: 'Nerko One', cursive;
-  margin: 50px auto;
-  width: 900px;
+  margin: 0 auto 50px;
+  width: 960px;
   box-sizing: border-box;
-  background-color: rgb(151, 196, 211);
+  background-color: #345179;
   text-align: center;
-  color: rgb(0, 41, 74);
+  font-weight: 300;
+  font-size: 1.2em;
 }
 
 input {
   border-radius: 2px;
   border: 1px solid steelblue;
   background-color: white;
+  margin-left: 10px;
 }
 
-input[type='submit'] {
+input[type='submit'],
+button {
   border: 1px solid steelblue;
   color: rgb(0, 41, 74);
-  margin-left: 5px;
   font-family: 'Nerko One', cursive;
+}
+
+button {
+  font-size: 1.2em;
+  border-radius: 2px;
+  background-color: white;
 }
 
 tr, td {
@@ -27,6 +35,10 @@ tr, td {
 
 .names, th, .totals {
   border: 2px solid steelblue;
+}
+
+.names {
+  min-width: 80px;
 }
 
 .totals {
@@ -38,12 +50,13 @@ table table {
 }
 
 table {
-  border: 2px solid steelblue;
-  background-color: white;
+  border: 2px solid white;
+  color: #345179;
+  background-color: #345179;
 }
 
 table table {
-  background-color: lightblue;
+  background-color: #345179;
   border: 2px solid steelblue;
 } 
 
@@ -51,7 +64,6 @@ table table td {
   width: 30px;
   height: 30px;
   text-align: center;
-  border: 1px solid steelblue;
 }
 
 .score-input {
@@ -59,18 +71,40 @@ table table td {
 }
 
 .warning {
-  color: red;
+  color: palevioletred;
+  margin-left: 10px;
   display: inline;
 }
 
-/* .current-player td {
-  background-color: lightgreen;
+tr td.current-shot {
+  background-color: palevioletred;
 }
 
-tr td.current-frame {
-  background-color: lightyellow;
-} */
+label {
+  display: block;
+  color: white;
+}
 
-tr td.current-shot {
-  background-color: lightpink;
+.score-input label {
+  display: inline-block;
+}
+
+.player-input label {
+  margin-bottom: 5px;
+}
+
+.winner {
+  color: white;
+  margin: 30px auto 0;
+  font-size: 1.5em;
+}
+
+.winner div {
+  display: inline-block;
+}
+
+.winner .text {
+  line-height: 108px;
+  vertical-align: top;
+  margin: 0 30px;
 }

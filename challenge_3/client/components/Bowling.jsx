@@ -7,7 +7,7 @@ class App extends React.Component {
     this.state = {
       currentPin: '',
       numPlayers: 2,
-      playerNames: ['Chili', 'Crash'],
+      playerNames: ['Player1', 'Player2'],
       currentFrame: 0,
       currentPlayer: 0,
       invalidPinNum: false,
@@ -19,34 +19,25 @@ class App extends React.Component {
         // [ shot1, shot2, shot3, runningTotal ]
         [[null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0]],
         [[null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0]],
-        [[null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0]],
-        [[null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0], [null, null, null, 0]]
       ]
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
-    // this.handleRestart = this.handleRestart.bind(this);
+    this.handlePlayerSubmit = this.handlePlayerSubmit.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
     this.addShot = this.addShot.bind(this);
   }
 
-  newGame() {
-
-    this.setState({
-      showGameStart: false
-    })
-  }
-
   componentDidMount() {
-    // this.newGame();
     setInterval(() => {
-      if (this.state.showGameStart === false && this.state.currentFrame < 9)
+      if (this.state.showGameStart === false && this.state.currentFrame < 10)
         this.addShot(Math.random() * 11 | 0);
     }, 100);
   }
 
   handleInputChange(e) {
     const name = e.target.name;
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value) || 0;
     this.setState({
       [name]: value
     });
@@ -87,11 +78,8 @@ class App extends React.Component {
 
         if (player >= newScoreboard.length) {
           player = 0;
-          // frame++;
-
-          if (frame !== 9) {
-            frame++;
-          } else {
+          frame++;
+          if (frame > 9) {
             let winningPoints = 0;
             let index;
             for (var i = 0; i < newScoreboard.length; i++) {
@@ -103,7 +91,7 @@ class App extends React.Component {
             this.setState({
               winner: this.state.playerNames[index],
               gameOver: true
-            })
+            });
           }
         }
       }
@@ -163,19 +151,46 @@ class App extends React.Component {
     this.addShot(this.state.currentPin);
   }
 
+  handleRestart() {
+    this.setState({
+      showGameStart: true,
+      gameOver: false,
+      currentFrame: 0,
+      currentPlayer: 0,
+      currentShot: 0
+    })
+  }
+
+  handlePlayerSubmit(e) {
+    e.preventDefault();
+    // Not working, array is filled with same object instance, all frames are the same:
+    // const newScoreboard = new Array(this.state.numPlayers).fill(
+    //   new Array(10).fill([null, null, null, 0])
+    // );
+    const newScoreboard = [];
+    for (let i = 0; i < this.state.numPlayers; i++) {
+      newScoreboard[i] = [];
+      for (let j = 0; j < 10; j++) {
+        newScoreboard[i][j] = [null, null, null, 0];
+      }
+    }
+    this.setState({
+      scoreboard: newScoreboard,
+      showGameStart: false,
+    });
+  }
+
   render() {
     return (
       <div>
-        {/* <h1>Bowling Score Board</h1> */}
-        <div><img src="Logo.svg" width="300" /></div>
+        <div><img src="Logo.svg" width="400" /></div>
         {this.state.showGameStart &&
           <div>
             <form className="player-input" onSubmit={this.handlePlayerSubmit}>
               <label htmlFor="player-num">
                 Number of players:
-                {' '}
                 <input
-                  type="text"
+                  type="number"
                   id="player-num"
                   name="numPlayers"
                   value={this.state.numPlayers}
@@ -183,6 +198,24 @@ class App extends React.Component {
                   required
                 />
               </label>
+              {[...Array(this.state.numPlayers)].map((_, index) => {
+                const playerId = `player${index}`;
+                return (
+                  <label htmlFor={playerId}>
+                    Player {index + 1}:
+                    <input
+                      type="text"
+                      name={playerId}
+                      onChange={(e) => {
+                        const newPlayerNames = this.state.playerNames.slice();
+                        newPlayerNames[index] = e.target.value;
+                        this.setState({ playerNames: newPlayerNames });
+                      }}
+                      value={this.state.playerNames[index]}
+                    />
+                  </label>
+                );
+              })}
               <input type="submit" value="submit" />
             </form>
           </div>
@@ -191,7 +224,6 @@ class App extends React.Component {
           <form className="score-input" onSubmit={this.handleInputSubmit}>
             <label htmlFor="current-pin">
               Number of pins you hit:
-            {' '}
               <input
                 type="text"
                 id="current-pin"
@@ -203,7 +235,7 @@ class App extends React.Component {
             </label>
             <input type="submit" value="submit" />
             {this.state.invalidPinNum &&
-              <p className="warning">Please type a valid pin number</p>
+              <p className="warning">Please type a valid pin number!</p>
             }
           </form>}
         <Board playerNames={this.state.playerNames}
@@ -211,11 +243,17 @@ class App extends React.Component {
           currentShot={this.state.currentShot}
           currentFrame={this.state.currentFrame}
           currentPlayer={this.state.currentPlayer}
-          />
+        />
         {this.state.gameOver &&
-          <div>
-            <div className="winner">Winner is: {this.state.winner}</div>
-            <button onClick={this.newGame}>Restart</button>
+        <div>
+          <div className="winner">
+            <div><img src="Logo2.svg" width="100" /></div>
+            <div><img src="Logo3.svg" width="100" /></div>
+            <div className="text">Congrats {this.state.winner}, you won!</div>
+            <div><img src="Logo3.svg" width="100" /></div>
+            <div><img src="Logo2.svg" width="100" /></div>
+          </div>
+          <button onClick={this.handleRestart}>Restart</button>
           </div>
         }
       </div>
