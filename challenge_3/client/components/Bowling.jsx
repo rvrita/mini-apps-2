@@ -6,8 +6,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPin: '',
-      numPlayers: 2,
-      playerNames: ['Player1', 'Player2'],
+      numPlayers: 4,
+      playerNames: ['Player1', 'Player2', 'Player3', 'Player4'],
       currentFrame: 0,
       currentPlayer: 0,
       invalidPinNum: false,
@@ -30,9 +30,9 @@ class App extends React.Component {
 
   componentDidMount() {
     setInterval(() => {
-      if (this.state.showGameStart === false && this.state.currentFrame < 10)
+      if (this.state.showGameStart === false && this.state.currentFrame < 9)
         this.addShot(Math.random() * 11 | 0);
-    }, 100);
+    }, 200);
   }
 
   handleInputChange(e) {
