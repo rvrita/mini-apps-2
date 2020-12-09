@@ -3,6 +3,7 @@
 
 import { NEW_GAME } from '../actions/newGame.js';
 import { ADD_FLAG } from '../actions/addFlag.js';
+import { SWEEP } from '../actions/sweep.js';
 
 // const rootReducer = combineReducers({
 //   addFlag,
@@ -37,7 +38,39 @@ const rootReducer = (state = { board: [] }, action) => {
       }
 
       // add values (count bombs around)
-      // TODO
+      // refactor!!!!
+      for (var m = 0; m < rows; m++) {
+        for (var n = 0; n < cols; n++) {
+          var count = 0;
+          if (board[m][n].value !== 10) {
+            if (m > 0 && n > 0 && board[m - 1][n - 1].value === 10) {
+              count++;
+            }
+            if (m > 0 && board[m - 1][n].value === 10) {
+              count++;
+            }
+            if (m > 0 && n < cols-1 && board[m - 1][n + 1].value === 10) {
+              count++;
+            }
+            if (n > 0 && board[m][n-1].value === 10) {
+              count++;
+            }
+            if (n < cols-1 && board[m][n + 1].value === 10) {
+              count++;
+            }
+            if (m < rows-1 && n > 0 && board[m + 1][n -1].value === 10) {
+              count++;
+            }
+            if (m < rows-1 && board[m+1][n].value === 10) {
+              count++;
+            }
+            if (m < rows-1 && n < cols-1 && board[m + 1][n+1].value === 10) {
+              count++;
+            }
+            board[m][n].value = count;
+          }
+        }
+      }
 
       return {
         ...state,
@@ -49,6 +82,16 @@ const rootReducer = (state = { board: [] }, action) => {
       // replace slice later bcz it mutates object
       const board = state.board.slice();
       board[x][y].flag = true;
+      return {
+        ...state,
+        board,
+      };
+    }
+    case SWEEP: {
+      const { x, y } = action.payload;
+      // replace slice later bcz it mutates object
+      const board = state.board.slice();
+      board[x][y].explored = true;
       return {
         ...state,
         board,

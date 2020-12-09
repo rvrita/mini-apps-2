@@ -8,17 +8,24 @@ class Board extends React.PureComponent {
     return (
       <div className="board">
         <table>
-          {board.map((row, index) => {
+          <tbody>
+          {board.map((row, rowIndex) => {
             return (
-              <tr key={index}>
-                {row.map((cell, index) => {
+              <tr key={rowIndex}>
+                {row.map((cell, colIndex) => {
                   return (
-                    <td key={index} onClick={(e) => handleCellClick(e.target.value)}>{cell.value}</td>
+                    <td key={colIndex}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCellClick(rowIndex,colIndex);
+                    }}>{cell.explored ? cell.value : null}</td>
+                  // }}>{cell.value}</td>
                   )
                 })}
               </tr>
             )
           })}
+          </tbody>
         </table>
       </div>
     );

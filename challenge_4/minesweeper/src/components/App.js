@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import BoardContainer from '../containers/BoardContainer.js'
 
 class App extends React.Component {
@@ -25,7 +24,7 @@ class App extends React.Component {
           e.preventDefault();
           onNewGame(boardSize);
         }}>
-          <label for="boardSize">Choose a board size:</label>
+          <label htmlFor="boardSize">Choose a board size:</label>
           <select onChange={this.handleChange}
             value={boardSize}
             name="boardSize" 

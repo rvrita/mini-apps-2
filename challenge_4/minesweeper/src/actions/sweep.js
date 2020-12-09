@@ -1,11 +1,11 @@
-// export const SWEEP = 'SWEEP';
+export const SWEEP = 'SWEEP';
 
-// var sweep = (x,y) => ({
-//   type: SWEEP,
-//   payload: {
-//     x: x,
-//     y: y,
-//   }
-// });
+var sweep = (x,y) => ({
+  type: SWEEP,
+  payload: {
+    x: x,
+    y: y,
+  }
+});
 
-// export default sweep;
+export default sweep;

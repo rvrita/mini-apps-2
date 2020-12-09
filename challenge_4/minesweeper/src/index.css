@@ -5,9 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+table td {
+  height: 24px;
+  width: 24px;
+  border: 1px solid gray;
+  background-color: lightgray;
+}
+
