@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import App from '../components/App.js';
 import newGame from '../actions/newGame.js';
 
-
 const mapStateToProps = (state) => ({
   board: state.board,
+  gameover: state.gameover
 });
 
 const mapDispatchToProps = (dispatch) => ({

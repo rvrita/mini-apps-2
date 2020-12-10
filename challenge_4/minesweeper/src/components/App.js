@@ -16,7 +16,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { onNewGame } = this.props;
+    const { onNewGame, gameover } = this.props;
     const { boardSize } = this.state;
     return (
       <div className="App">
@@ -24,17 +24,20 @@ class App extends React.Component {
           e.preventDefault();
           onNewGame(boardSize);
         }}>
-          <label htmlFor="boardSize">Choose a board size:</label>
+          {/* <label htmlFor="boardSize">Choose a board size:<br/></label> */}
           <select onChange={this.handleChange}
             value={boardSize}
-            name="boardSize" 
+            name="boardSize"
             id="board-size">
-            <option value="small">small</option>
-            <option value="medium">medium</option>
-            <option value="large">large</option>
+            <option value="small">Beginner</option>
+            <option value="medium">Intermediate</option>
+            <option value="large">Expert</option>
           </select>
-          <button type="submit">Start new game</button>
+          <button type="submit">New game</button>
         </form>
+        {gameover &&
+          <div className="game-over">Game over!</div>
+        }
         <BoardContainer />
       </div>
     );
