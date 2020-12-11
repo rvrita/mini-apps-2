@@ -6,7 +6,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       boardSize: 'medium',
+      currentTime: Date.now(),
     };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      const { gameover, win } = this.props;
+      if (gameover === false && win === false) {
+        this.setState({
+          currentTime: Date.now(),
+        });
+      }
+    }, 1000);
   }
 
   handleChange = (e) => {
@@ -16,15 +28,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { onNewGame, gameover } = this.props;
-    const { boardSize } = this.state;
+    const { onNewGame, gameover, counter, win, startTime } = this.props;
+    const { boardSize, currentTime } = this.state;
     return (
       <div className="App">
-        <form onSubmit={e => {
+        <form onSubmit={(e) => {
           e.preventDefault();
           onNewGame(boardSize);
         }}>
-          {/* <label htmlFor="boardSize">Choose a board size:<br/></label> */}
           <select onChange={this.handleChange}
             value={boardSize}
             name="boardSize"
@@ -38,7 +49,18 @@ class App extends React.Component {
         {gameover &&
           <div className="game-over">Game over!</div>
         }
-        <BoardContainer />
+        {win &&
+          <div className="win">Congrats, you won!</div>
+        }
+        {counter > -1 &&
+          <div>
+            <div className="game-header">
+              <div>{counter}</div>
+              <div>{Math.floor((currentTime - startTime) / 1000) > 0 ? Math.floor((currentTime - startTime) / 1000) : 0}</div>
+            </div>
+            <BoardContainer />
+          </div>
+        }
       </div>
     );
   }

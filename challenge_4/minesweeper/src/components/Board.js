@@ -2,7 +2,7 @@ import React from 'react';
 
 class Board extends React.PureComponent {
   render() {
-    const { board, handleCellClick, handleRightClick } = this.props;
+    const { board, handleCellClick, handleRightClick} = this.props;
 
     return (
       <div className="board">

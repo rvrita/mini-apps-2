@@ -8,6 +8,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background: url('minesweeperr_03.jpg') repeat fixed;
+  background-color: #4e5157;
+  background-blend-mode: multiply;
 }
 
 code {
@@ -21,7 +24,7 @@ form {
 
 select {
   padding: 5px 10px;
-  margin-right: 5px;
+  margin-right: 10px;
   font-size: 1.2em;
   border-style: outset;
   border-width: 4px;
@@ -33,7 +36,7 @@ select {
 table {
   margin: 0 auto;
   table-layout: fixed;
-  margin-top: 120px;
+  margin-top: 30px;
   border-style: inset;
   border-width: 4px;
   border-color: #cbcbcb #fff #fff #cbcbcb;
@@ -77,20 +80,41 @@ td button {
 }
 
 .bomb {
-  background-color: rgb(255, 47, 0);
-  border: none;
+  background-color: rgb(210, 38, 0);
 }
 
-.game-over {
+.game-over,
+.win {
   position: absolute;
-  top: 90px;
+  top: 100px;
   left: 50%;
-  width: 200px;
-  margin-left: -100px;
+  width: 300px;
+  margin-left: -150px;
   box-sizing: border-box;
   font-family: 'Chango', cursive;
-  color: red;
+  color: rgb(255, 0, 0);
   font-size: 1.4em;
+}
+
+.game-header {
+  border-style: outset;
+  border-width: 4px;
+  border-color: #fff #cbcbcb #cbcbcb #fff;
+  background-color: #e1e1e1;
+  width: 230px;
+  margin: 0 auto;
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-header div {
+  border-style: outset;
+  border-width: 4px;
+  border-color: #fff #cbcbcb #cbcbcb #fff;
+  background-color: #e1e1e1;
+  padding: 5px 10px;
+  font-size: 1.2em;
 }
 
 .one {
@@ -108,9 +132,3 @@ td button {
 .four {
  color: #001279;
 }
-
-
-
-/* .five {
-
-} */

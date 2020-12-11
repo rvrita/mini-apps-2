@@ -4,7 +4,10 @@ import newGame from '../actions/newGame.js';
 
 const mapStateToProps = (state) => ({
   board: state.board,
-  gameover: state.gameover
+  gameover: state.gameover,
+  counter: state.counter,
+  win: state.win,
+  startTime: state.startTime
 });
 
 const mapDispatchToProps = (dispatch) => ({
